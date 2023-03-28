@@ -19,6 +19,12 @@ const HELLO_QUERY = gql`
 	}
 `;
 
+const DATE_QUERY = gql`
+  query {
+    currentDate
+  }
+`;
+
 function Hello() {
 	const [message, setMessage] = useState('');
 	const [getGreeting, { loading, error, data }] = useLazyQuery(HELLO_QUERY);
@@ -50,6 +56,27 @@ function Hello() {
 		</div>
 	);
 }
+
+function Date() {
+	const [getDate, { loading, error, data }] = useLazyQuery(DATE_QUERY);
+  
+	const handleButtonClick = () => {
+	  getDate();
+	};
+  
+	if (loading) return <p>Cargando...</p>;
+	if (error) return <p>Error :(</p>;
+  
+	return (
+	  <div>
+		<Button className='mt-2' variant="primary" onClick={handleButtonClick}>
+		  Mostrar fecha actual
+		</Button>
+		{data && <h2 className='mt-3'>{data.currentDate}</h2>}
+	  </div>
+	);
+  }
+
 function App() {
 	return (
 		<ApolloProvider client={client}>
@@ -58,6 +85,7 @@ function App() {
 					<Col xs={12} md={{ span: 6, offset: 3 }}>
 						<h1>Aplicación React y GraphQL</h1>
 						<Hello />
+						<Date/>
 					</Col>
 				</Row>
 			</Container>
