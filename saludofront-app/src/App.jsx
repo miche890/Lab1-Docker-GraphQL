@@ -20,9 +20,15 @@ const HELLO_QUERY = gql`
 `;
 
 const DATE_QUERY = gql`
-  query {
-    currentDate
-  }
+	query {
+		currentDate
+	}
+`;
+
+const TIME_QUERY = gql`
+	query {
+		currentTime
+	}
 `;
 
 function Hello() {
@@ -59,23 +65,43 @@ function Hello() {
 
 function Date() {
 	const [getDate, { loading, error, data }] = useLazyQuery(DATE_QUERY);
-  
+
 	const handleButtonClick = () => {
-	  getDate();
+		getDate();
 	};
-  
+
 	if (loading) return <p>Cargando...</p>;
 	if (error) return <p>Error :(</p>;
-  
+
 	return (
-	  <div>
-		<Button className='mt-2' variant="primary" onClick={handleButtonClick}>
-		  Mostrar fecha actual
-		</Button>
-		{data && <h2 className='mt-3'>{data.currentDate}</h2>}
-	  </div>
+		<div>
+			<Button className="mt-2" variant="primary" onClick={handleButtonClick}>
+				Mostrar fecha actual
+			</Button>
+			{data && <h2 className="mt-3">{data.currentDate}</h2>}
+		</div>
 	);
-  }
+}
+
+function Time() {
+	const [getTime, { loading, error, data }] = useLazyQuery(TIME_QUERY);
+
+	const handleButtonClick = () => {
+		getTime();
+	};
+
+	if (loading) return <p>Cargando...</p>;
+	if (error) return <p>Error :(</p>;
+
+	return (
+		<div>
+			<Button className="mt-2" variant="primary" onClick={handleButtonClick}>
+				Mostrar hora actual
+			</Button>
+			{data && <h2 className="mt-3">{data.currentTime}</h2>}
+		</div>
+	);
+}
 
 function App() {
 	return (
@@ -85,7 +111,8 @@ function App() {
 					<Col xs={12} md={{ span: 6, offset: 3 }}>
 						<h1>Aplicación React y GraphQL</h1>
 						<Hello />
-						<Date/>
+						<Date />
+						<Time />
 					</Col>
 				</Row>
 			</Container>

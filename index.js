@@ -7,6 +7,7 @@ const typeDefs = gql`
 	type Query {
 		hello(message: String!): String
 		currentDate: String
+		currentTime: String
 	}
 `;
 
@@ -19,7 +20,11 @@ const resolvers = {
 		currentDate: () => {
 			const date = new Date();
 			return date.toLocaleDateString();
-		  }
+		},
+		currentTime: () => {
+			const date = new Date();
+			return date.toLocaleTimeString();
+		},
 	},
 };
 
