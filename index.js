@@ -6,6 +6,7 @@ const path = require('path');
 const typeDefs = gql`
 	type Query {
 		hello(message: String!): String
+		currentDate: String
 	}
 `;
 
@@ -13,8 +14,12 @@ const typeDefs = gql`
 const resolvers = {
 	Query: {
 		hello: (_, { message }) => {
-			return `¡Hola, ${message}! Un saludo por parte del profe `;
+			return `¡Hola, ${message}! Un saludo de parte de Gustavo y Michelle `;
 		},
+		currentDate: () => {
+			const date = new Date();
+			return date.toLocaleDateString();
+		  }
 	},
 };
 
